@@ -1,7 +1,48 @@
+import os
+from dotenv import load_dotenv
+from ..utils.sqlite_database import SqliteDatabase
 from typing import TypedDict
-from langchain_core.tools import tool, ToolRuntime
+from langchain_core.tools import tool
+from langchain.tools import ToolRuntime
 from langgraph.types import Command
 from langchain.messages import ToolMessage
+
+load_dotenv()
+
+SQLITE_DATABASE = SqliteDatabase(os.environ.get("PATH_DATA_SQLITE"))
+
+
+@tool
+def sql_db_list_tables() -> str:
+    """Input is an empty string, output is a comma-separated list of tables in the database."""
+    try:
+        return SQLITE_DATABASE.list_tables()
+    except Exception as e:
+        return f"Error: {e}"
+
+
+@tool
+def sql_db_schema(table_names: str) -> str:
+    """Input to this tool is a comma-separated list of tables, output is the schema and sample rows for those tables.
+    Be sure that the tables actually exist by calling sql_db_list_tables first!
+    Example Input: table1, table2, table3"""
+    try:
+        return SQLITE_DATABASE.get_schema_data(table_names)
+    except Exception as e:
+        return f"Error: {e}"
+
+
+@tool
+def sql_db_query(query: str) -> str:
+    """Input to this tool is a detailed and correct SQL query, output is a result from the database.
+    If the query is not correct, an error message will be returned.
+    If an error is returned, rewrite the query, check the query, and try again.
+    If you encounter an issue with Unknown column 'xxxx' in 'field list', use sql_db_schema to query the correct table fields."""
+    try:
+        res = SQLITE_DATABASE.run_query(query)
+        return str(res)
+    except Exception as e:
+        return f"Error: {e}"
 
 
 class Skill(TypedDict):
@@ -213,23 +254,23 @@ def write_sql_query(
 
 @tool
 def get_list_table():
-    """ """
+    """N/A"""
     pass
 
 
 @tool
 def get_database_schema():
-    """ """
+    """N/A"""
     pass
 
 
 @tool
 def run_query():
-    """ """
+    """N/A"""
     pass
 
 
 @tool
 def valide_query():
-    """ """
+    """N/A"""
     pass
