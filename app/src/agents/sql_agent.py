@@ -8,8 +8,16 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langchain.chat_models import init_chat_model
 from langchain.messages import SystemMessage
 
-from ..prompt_template import PROMPT_SYS_AGENT_SQL
-from ..tools.sql_tools import load_skill, write_sql_query, SKILLS
+from ..prompt_template import PROMPT_SYS_AGENT_SQL, PROMPT_SYS_AGENT_SQL_ONDEMANDE
+from ..tools.sql_tools import (
+    load_skill,
+    write_sql_query,
+    SKILLS,
+    sql_db_list_tables,
+    sql_db_schema,
+    sql_db_query,
+    create_sql_db_checker,
+)
 from ..utils.state import CustomState
 
 load_dotenv()
@@ -54,9 +62,14 @@ class SkillMiddleware(AgentMiddleware[CustomState]):
 
 MODEL = init_chat_model(model=os.environ.get("MODEL_ID"))
 
-agent_sql = create_agent(
+agent_sql_on_demande = create_agent(
     MODEL,
-    system_prompt=PROMPT_SYS_AGENT_SQL,
+    system_prompt=PROMPT_SYS_AGENT_SQL_ONDEMANDE,
     middleware=[SkillMiddleware()],
     checkpointer=InMemorySaver(),
 )
+
+sql_db_query_check = create_sql_db_checker(MODEL)
+tools = [sql_db_list_tables, sql_db_schema, sql_db_query, sql_db_query_check]
+prompt_system = PROMPT_SYS_AGENT_SQL.format(dialect="sqlite", top_k=5)
+agent_sql = create_agent(model=MODEL, tools=tools, system_prompt=prompt_system)

@@ -1,11 +1,14 @@
 import os
 from dotenv import load_dotenv
-from ..utils.sqlite_database import SqliteDatabase
+
 from typing import TypedDict
 from langchain_core.tools import tool
 from langchain.tools import ToolRuntime
 from langgraph.types import Command
 from langchain.messages import ToolMessage
+
+from ..utils.sqlite_database import SqliteDatabase
+from ..prompt_template import PROMPT_TRIGGER
 
 load_dotenv()
 
@@ -43,6 +46,19 @@ def sql_db_query(query: str) -> str:
         return str(res)
     except Exception as e:
         return f"Error: {e}"
+
+
+def create_sql_db_checker(model):
+    @tool
+    def sql_db_query_checker(query: str) -> str:
+        """Use this tool to double check if your query is correct before executing it.
+        Always use this tool before executing a query with sql_db_query!"""
+        trigger_prompt = PROMPT_TRIGGER.format(query=query)
+
+        response = model.invoke(trigger_prompt)
+        return response.text.strip()
+
+    return sql_db_query_checker
 
 
 class Skill(TypedDict):
