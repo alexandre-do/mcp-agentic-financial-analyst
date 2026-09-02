@@ -33,8 +33,9 @@ dependencies = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["app/tests"]
 python_files = ["test_*.py"]
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
