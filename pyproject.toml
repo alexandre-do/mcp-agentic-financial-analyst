@@ -31,6 +31,7 @@ dependencies = [
     "deepagents>=0.7.7",
     "pypdf>=6.16.1",
     "requests>=2.31.0",
+    "langchain-mcp-adapters>=0.3.2",
 ]
 
 [tool.pytest.ini_options]
