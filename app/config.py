@@ -20,6 +20,7 @@ class Settings:
     db_password: str = os.getenv("DB_PASSWORD", "change-me")
     model_id: str = os.getenv("MODEL_ID", "")
     log_level: str = os.getenv("LOG_LEVEL", "INFO")
+    alpha_vantage_api_key: str = os.getenv("ALPHA_VANTAGE_API_KEY", "")
 
 
 settings = Settings()

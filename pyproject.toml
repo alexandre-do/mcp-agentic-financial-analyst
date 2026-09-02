@@ -1,7 +1,7 @@
 [project]
-name = "agentic-data-analyst"
+name = "mcp-agentic-financial-analyst"
 version = "0.1.0"
-description = "Agentic Data Analyst template for AI-powered analytics workflows"
+description = "MCP-powered agentic financial analyst for AI-powered analytics workflows"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -30,6 +30,8 @@ dependencies = [
     "langsmith>=0.11.0",
     "deepagents>=0.7.7",
     "pypdf>=6.16.1",
+    "requests>=2.31.0",
+    "langchain-mcp-adapters>=0.3.2",
 ]
 
 [tool.pytest.ini_options]
