@@ -1,7 +1,7 @@
 [project]
-name = "agentic-data-analyst"
+name = "mcp-agentic-financial-analyst"
 version = "0.1.0"
-description = "Agentic Data Analyst template for AI-powered analytics workflows"
+description = "MCP-powered agentic financial analyst for AI-powered analytics workflows"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

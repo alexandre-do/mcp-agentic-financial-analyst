@@ -1,4 +1,4 @@
-# Agentic Data Analyst
+# MCP Agentic Financial Analyst
 
 This project is a starter template for an agentic analytics application that can:
 
@@ -12,7 +12,7 @@ This project is a starter template for an agentic analytics application that can
 ## Project structure
 
 ```text
-agentic-data-analyst/
+mcp-agentic-financial-analyst/
 ├── app/
 │   ├── api/
 │   │   ├── routes.py
