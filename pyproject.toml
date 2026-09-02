@@ -34,12 +34,17 @@ dependencies = [
     "langchain-mcp-adapters>=0.3.2",
 ]
 
+[dependency-groups]
+dev = ["ruff==0.12.8"]
+
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["app/tests"]
 python_files = ["test_*.py"]
+pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["experiments"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]

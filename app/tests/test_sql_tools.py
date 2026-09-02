@@ -1,4 +1,4 @@
-from app.mcp.tools.sql_tools import list_tables, run_sql_query
+from app.src.mcp.tools.sql_tools import list_tables, run_sql_query
 
 
 def test_list_tables_returns_list():
