@@ -32,6 +32,9 @@ dependencies = [
     "pypdf>=6.16.1",
 ]
 
+[dependency-groups]
+dev = ["ruff==0.12.8"]
+
 [tool.pytest.ini_options]
 testpaths = ["app/tests"]
 python_files = ["test_*.py"]
@@ -39,6 +42,7 @@ pythonpath = ["."]
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["experiments"]
 
 [build-system]
 requires = ["setuptools>=68", "wheel"]
