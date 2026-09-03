@@ -29,18 +29,19 @@ This project is an agentic analytics application that can:
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
 ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?logo=plotly&logoColor=white)
 
-**Frontend** (planned)
+**Frontend**
 
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
 
-The frontend has not been built yet; a JavaScript/Node.js app is the planned client for the FastAPI backend.
+A mobile-first chat UI for the bot, built with React/TypeScript/Vite, lives in [`app/frontend`](app/frontend). See its [README](app/frontend/README.md) for setup. It talks to the FastAPI backend's `/query` endpoint, which is still a stub.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    FE["JS / Node.js frontend<br/>(planned)"]
+    FE["React/TS chat UI<br/>app/frontend"]
     API["FastAPI backend<br/>app/backend/routes.py"]
 
     subgraph Agents["LangChain / LangGraph agents · app/src/agents"]
@@ -68,7 +69,7 @@ flowchart LR
     AVT -. not wired in .-> AVMCP
 ```
 
-`sql_agent` and `dataviz_agent` are runnable today; `info_agent` talks to Alpha Vantage's hosted MCP server directly. `chat_agent` and the FastAPI/frontend layers are still scaffolding — see [Notes](#notes).
+`sql_agent` and `dataviz_agent` are runnable today; `info_agent` talks to Alpha Vantage's hosted MCP server directly. `chat_agent` and the FastAPI `/query` endpoint are still scaffolding — the frontend chat UI is built but calls into a stub response until they're wired in — see [Notes](#notes).
 
 ## Data
 
@@ -108,8 +109,16 @@ Live market data (quotes, time series, company fundamentals, symbol search) is s
    ```bash
    pytest
    ```
+5. Run the FastAPI backend and the chat frontend together:
+   ```bash
+   uv run uvicorn app.backend.routes:app --port 8000
+   ```
+   ```bash
+   cd app/frontend && npm install && npm run dev
+   ```
+   Open `http://localhost:5173` for the mobile chat UI. See [`app/frontend/README.md`](app/frontend/README.md) for details.
 
-The FastAPI backend (`app/backend/routes.py`) and MCP server (`app/src/mcp/server.py`) are still early scaffolding and not yet wired to the agents above.
+The MCP server (`app/src/mcp/server.py`) is still early scaffolding and not yet wired to the agents above, and the FastAPI backend's `/query` endpoint is a stub — the frontend is functional but not yet connected to real agent orchestration.
 
 ## Notes
 
